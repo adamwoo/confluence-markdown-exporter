@@ -169,7 +169,7 @@ class ApiDetails(BaseModel):
         ),
     )
 
-    @field_validator("username", "api_token", "pat", "session_cookies", mode="before")
+    @field_validator("username", "api_token", "password", "pat", "session_cookies", mode="before")
     @classmethod
     def _single_line(cls, v: object) -> object:
         raw = v.get_secret_value() if isinstance(v, SecretStr) else v
@@ -177,7 +177,7 @@ class ApiDetails(BaseModel):
             return raw.replace("\r", "").replace("\n", "")
         return v
 
-    @field_serializer("username", "api_token", "pat", "session_cookies", when_used="json")
+    @field_serializer("username", "api_token", "password", "pat", "session_cookies", when_used="json")
     def dump_secret(self, v: SecretStr) -> str:
         return v.get_secret_value()
 
