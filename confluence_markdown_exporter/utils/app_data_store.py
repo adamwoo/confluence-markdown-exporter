@@ -133,6 +133,11 @@ class ApiDetails(BaseModel):
             "See Atlassian documentation for details."
         ),
     )
+    password: SecretStr = Field(
+        default=SecretStr(""),
+        title="Password",
+        description="Password for Confluence Server/Data Center basic authentication.",
+    )
     pat: SecretStr = Field(
         default=SecretStr(""),
         title="Personal Access Token (PAT)",

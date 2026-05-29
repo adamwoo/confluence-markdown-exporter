@@ -212,9 +212,9 @@ class ApiClientFactory:
             # Standard authentication
             instance = ConfluenceApiSdk(
                 url=url,
-                username=auth.username.get_secret_value() if auth.api_token else None,
-                password=auth.api_token.get_secret_value() if auth.api_token else None,
-                token=auth.pat.get_secret_value() if auth.pat else None,
+                username=auth.username.get_secret_value() or None,
+                password=auth.api_token.get_secret_value() or auth.password.get_secret_value() or None,
+                token=auth.pat.get_secret_value() or None,
                 **self.connection_config.model_dump(),
             )
 
@@ -229,9 +229,9 @@ class ApiClientFactory:
         try:
             instance = JiraApiSdk(
                 url=url,
-                username=auth.username.get_secret_value() if auth.api_token else None,
-                password=auth.api_token.get_secret_value() if auth.api_token else None,
-                token=auth.pat.get_secret_value() if auth.pat else None,
+                username=auth.username.get_secret_value() or None,
+                password=auth.api_token.get_secret_value() or auth.password.get_secret_value() or None,
+                token=auth.pat.get_secret_value() or None,
                 **self.connection_config.model_dump(),
             )
             instance.get_all_projects()
